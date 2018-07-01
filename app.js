@@ -63,7 +63,8 @@ passportSetup(app);
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-
+const authRouter = require("./routes/auth-route.js");
+app.use("/", authRouter);
 
 const index = require('./routes/index');
 app.use('/', index);

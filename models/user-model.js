@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const userSchema= new Schema({
     fullName:{type:String, required: true},
     email:{type: String, required: true, unique: true, match:/^.+@.+\..+$/},
-    role: {type: String, enum:["guest", "host"], default:"normal", required: true},
+    role: {type: String, enum:["guest", "host"], default:"guest", required: true},
 
     //only for users that sign up normally
     encryptedPassword:{ type: String},
