@@ -8,6 +8,11 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const session      = require("express-session");
+const MongoStore   = require("connect-mongo")(session);
+const flash          = require("connect-flash");
+
+const passportSetup=require("./passport/setup.js");
 
 
 mongoose.Promise = Promise;
@@ -44,7 +49,16 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+app.use(session({
+  secret: "secret should be different fot every app",
+  saveUninitialized: true,
+  resave: true,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+app.use(flash());
 
+//this must come after session setup
+passportSetup(app);
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
