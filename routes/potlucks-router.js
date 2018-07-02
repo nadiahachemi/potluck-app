@@ -48,7 +48,7 @@ router.get("/potlucks", (req, res, next) => {
     return;
   }
 
-  Potluck.find({ owner: req.user._id })
+  Potluck.find({ host: req.user._id })
     .then(potluckResults => {
       res.locals.potluckArray = potluckResults;
       res.render("potluck-views/potluck-list.hbs");
@@ -58,23 +58,23 @@ router.get("/potlucks", (req, res, next) => {
     });
 });
 
-
-router.get("/potlucks/:potluckId", (req, res, nest)=>{
-  const {potluckId} = req.params;
+router.get("/potlucks/:potluckId", (req, res, nest) => {
+  const { potluckId } = req.params;
   // console.log(req.user,"````````````````````````````````````");
-  if(!req.user){
-      //req.flash is defined by the "connect-flash" package
-      req.flash("error", "you must be logged in")
-      // redirect away if you aren't logged in
-      res.redirect("/login");
-      return;
-    }
-   Potluck.find({host:req.user._id})
-      .then(result => {
-      console.log(result)
-      res.locals.potluckArray= result;
-      res.render("potlucks-details.hbs", {result});
-   }).catch(err => console.log(err))
+  if (!req.user) {
+    //req.flash is defined by the "connect-flash" package
+    req.flash("error", "you must be logged in");
+    // redirect away if you aren't logged in
+    res.redirect("/login");
+    return;
+  }
+  Potluck.find({ host: req.user._id })
+    .then(result => {
+      console.log(result);
+      res.locals.potluckArray = result;
+      res.render("potlucks-details.hbs", { result });
+    })
+    .catch(err => console.log(err));
 
   // console.log()
   //   Potluck.find({host: req.user._id})
@@ -86,7 +86,6 @@ router.get("/potlucks/:potluckId", (req, res, nest)=>{
   //   .catch((err)=>{
   //       nest(err);
   //   })
-  
-})
+});
 
 module.exports = router;
