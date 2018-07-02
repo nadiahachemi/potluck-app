@@ -1,0 +1,24 @@
+<h2>User Settings</h2>
+
+<form method="post" action="/process-settings">
+    <label>
+        Full name:
+        <input type="text" name="fullName" value="{{blahUser.fullName}}" placeholder="Lando Calrissian">
+    </label>
+    <br>
+
+    <h3>Change Your Password</h3>
+    <label>
+        Old password:
+        <input type="password" name="oldPassword" placeholder="******">
+    </label>
+    <br>
+
+    <label>
+        New password:
+        <input type="password" name="newPassword" placeholder="******">
+    </label>
+    <br>
+
+    <button>Save Settings</button>
+</form>

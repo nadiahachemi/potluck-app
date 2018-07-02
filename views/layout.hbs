@@ -10,9 +10,10 @@
   <nav>
     <a href="/">Home</a>
     {{#if blahUser}}
-    <strong>{{blahUser.email}}</strong>
+    <strong>{{blahUser.fullName}}</strong>
     <a href="/logout">Log Out</a>
     <a href="/potlucks">Your Potlucks</a>
+    <a href="/settings">Settings</a>
     {{else}}
     <a href="/login">Log In</a>
     <a href="/signup">Sign Up</a>

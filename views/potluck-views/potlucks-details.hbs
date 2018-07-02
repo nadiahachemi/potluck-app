@@ -1,21 +1,20 @@
 <h1>Dash Board</h1>
 
-{{!--
-<h2></h2>
-{{#each potluck}}
+<a href="/potlucks/{{potluckItem._id}}/edit">Edit Potluck</a>
+
+<h2>{{potluckItem.name}}</h2>
 
 <div>
 
-    <h2>{{this.name}}</h2>
-
-    <h2>Coming on {{this.date}}</h2>
-
-    <h2> At {{this.location}}</h2>
-
-    {{!--
-    <h2>with {{#each this.guests}}</h2>
-    <h3>this.guests.fullName</h3>
-    {{/each}} --}} {{!-- </div>
+    <h2>{{potluckItem.host.fullName}}</h2>
 
 
-{{/each}} --}} {{bookItem.name}}
+    <h2>Coming on {{potluckItem.date}}</h2>
+
+    <h2> At {{potluckItem.location}}</h2>
+
+    <h2>with : </h2>
+    {{#each potluckItem.guests}}
+    <h3>{{this.fullName}}</h3>
+    {{/each}}
+</div>
