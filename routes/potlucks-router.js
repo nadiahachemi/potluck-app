@@ -87,4 +87,22 @@ console.log({potluckId});
 })
 });
 
+router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
+  const {potluckId}= req.params;
+  const {foodAndDrink}= req.body;
+  console.log({foodAndDrink});
+
+  Potluck.findByIdAndUpdate(
+    potluckId,
+     {$push:{foodAndDrink}},
+    {runValidators: true}
+  )
+  .then((potluckDoc)=>{
+    res.redirect(`/potlucks/${potluckId}`)
+  })
+  .catch((err)=>{
+    next(err);
+  })
+});
+
 module.exports = router;

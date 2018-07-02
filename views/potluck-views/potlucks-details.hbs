@@ -4,17 +4,33 @@
 
 <div>
 
-<h2>{{potluckItem.host.fullName}}</h2>
+<h2> Organized by {{potluckItem.host.fullName}}</h2>
 
 
 <h2>Coming on {{potluckItem.date}}</h2>
 
 <h2> At {{potluckItem.location}}</h2>
 
+<h2>Food and Drinks:</h2> 
+
+<li>  {{potluckItem.foodAndDrink}}</li>
+
+
+
 <h2>with : </h2>
 {{#each potluckItem.guests}}
 <h3>{{this.fullName}}</h3>
 {{/each}}
 </div>
+
+<h3>Reviews</h3>
+
+<h4>Add Food or Drink</h4>
+<form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
+    <input type="text" name="foodAndDrink" placeholder="Bring ..."/>
+    <br/>
+    <button>Add</button>
+
+</form>
 
 

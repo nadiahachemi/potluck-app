@@ -17,16 +17,19 @@ const potluckSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
-      }
-    ],
+        }
+      ],
+      
     host: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true
-    }
-  },
-  { timestamps: true }
-);
+      },
+    foodAndDrink: [
+      { type: String }
+      ],
+ },
+ {timestamps: true}, );
 
 // userSchema.virtual("isAdmin").get(function() {
 //   return this.role === "admin";
