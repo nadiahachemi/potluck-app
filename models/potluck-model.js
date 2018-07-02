@@ -29,4 +29,4 @@ const potluckSchema = new Schema(
 
 const Potluck = mongoose.model("Potluck", potluckSchema);
 
-module.exports = User;
+module.exports =Potluck;
