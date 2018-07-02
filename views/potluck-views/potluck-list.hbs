@@ -5,10 +5,10 @@
     <li>
         <h3>{{this.name}}</h3>
         
-        <a href="/potlucks/:{{this.Item_id}}"><img src="{{this.pictureUrl}}"></a>
+        <a href="/potlucks/:{{this._id}}"><img src="{{this.pictureUrl}}"></a>
     </li>
     {{else}}
     <p>You don't have any potlucks yet.</p>
-    <a href="/potlucks/create">+ New Potluck</a>
     {{/each}}
+    <a href="/potlucks/create">+ New Potluck</a>
 </ul>

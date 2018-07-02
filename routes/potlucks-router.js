@@ -63,7 +63,7 @@ router.get("/potlucks", (req, res, next) => {
 //route pour acceder au detail du potluck
 router.get("/potlucks/:potluckId", (req, res, next)=>{
   const {potluckId} = req.params;
-  // console.log(req.user,"````````````````````````````````````");
+console.log({potluckId});
   if(!req.user){
       //req.flash is defined by the "connect-flash" package
       req.flash("error", "you must be logged in")
@@ -73,10 +73,12 @@ router.get("/potlucks/:potluckId", (req, res, next)=>{
     }
    
   Potluck.findById(potluckId)
-  .populate("author")
+  .populate("guests")
+  .populate("host")
 
 .then((potluckDoc)=>{
-  res.locals.potluckItem =potluckDoc;
+  console.log(potluckDoc)
+  res.locals.potluckItem = potluckDoc;
   res.render("potluck-views/potlucks-details.hbs");
 })
 .catch((err)=>{
