@@ -9,10 +9,14 @@
 <body>
   <nav>
     <a href="/">Home</a>
-    <a href="/login">Log In</a>
-    <a href="/signup">Sign Up</a>
+    {{#if blahUser}}
+    <strong>{{blahUser.email}}</strong>
     <a href="/logout">Log Out</a>
     <a href="/potlucks">Your Potlucks</a>
+    {{else}}
+    <a href="/login">Log In</a>
+    <a href="/signup">Sign Up</a>
+    {{/if}}
   </nav>
 
   {{{body}}}

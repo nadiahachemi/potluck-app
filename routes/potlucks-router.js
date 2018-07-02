@@ -58,7 +58,8 @@ router.get("/potlucks", (req, res, next) => {
     });
 });
 
-router.get("/potlucks/:potluckId", (req, res, nest) => {
+//route pour acceder au detail du potluck
+router.get("/potlucks/:potluckId", (req, res, next) => {
   const { potluckId } = req.params;
   // console.log(req.user,"````````````````````````````````````");
   if (!req.user) {
@@ -68,24 +69,17 @@ router.get("/potlucks/:potluckId", (req, res, nest) => {
     res.redirect("/login");
     return;
   }
-  Potluck.find({ host: req.user._id })
-    .then(result => {
-      console.log(result);
-      res.locals.potluckArray = result;
-      res.render("potlucks-details.hbs", { result });
-    })
-    .catch(err => console.log(err));
 
-  // console.log()
-  //   Potluck.find({host: req.user._id})
-  //   .then((potluckResults)=>{
-  //       res.locals.potluckArray= potluckResults;
-  //       console.log("Je suis le console.log   ====================== " + res.locals.potluckArray);
-  //       res.render("potluck-details.hbs");
-  //   })
-  //   .catch((err)=>{
-  //       nest(err);
-  //   })
+  Potluck.findById(potluckId)
+    .populate("guests")
+    .then(potluckDoc => {
+      res.locals.potluckItem = potluckDoc;
+      res.render("potluck-views/potlucks-details.hbs");
+    })
+    .catch(err => {
+      //show our error page
+      next(err);
+    });
 });
 
 module.exports = router;
