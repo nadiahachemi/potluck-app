@@ -34,8 +34,5 @@ const potluckSchema = new Schema(
 
 const Potluck = mongoose.model("Potluck", potluckSchema);
 
-<<<<<<< HEAD
-module.exports =Potluck;
-=======
+
 module.exports = Potluck;
->>>>>>> 1721e88e48c216672ad0b4527cff1d9111cdf1a3
