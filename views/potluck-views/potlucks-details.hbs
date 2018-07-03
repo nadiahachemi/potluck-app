@@ -30,11 +30,18 @@
 {{/each}}
 </div>
 
-<h3>Reviews</h3>
 
-<h4>Add Food or Drink</h4>
+<h3>Add Food or Drink</h3>
 <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
     <input type="text" name="foodAndDrink" placeholder="Bring ..."/>
+    <br/>
+    <button>Add</button>
+
+</form>
+
+<h3>Add Guests</h3>
+<form method="GET" action="/potlucks/{{potluckItem._id}}/process-guests">
+    <input type="search" name="users" placeholder="Invite ..."/>
     <br/>
     <button>Add</button>
 

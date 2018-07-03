@@ -2,6 +2,8 @@ const express = require("express");
 
 const Potluck = require("../models/potluck-model.js");
 
+const User = require("../models/user-model.js")
+
 const router = express.Router();
 
 // Route pour créer un potluck
@@ -139,5 +141,32 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
     next(err);
   })
 });
+
+
+
+// router.post("/potlucks/:potluckId/process-guests", (req, res, next)=>{
+//   const {potluckId}= req.params;
+//   const {guests}= req.body;
+  
+  
+//   User.findOne({fullName: guests});
+
+
+//   Potluck.findByIdAndUpdate(
+//     potluckId,
+//      {$push:{guests}},
+//     {runValidators: true}
+//   )
+//   .then((potluckDoc)=>{
+//     res.redirect(`/potlucks/${potluckId}`)
+//   })
+//   .catch((err)=>{
+//     next(err);
+//   })
+// });
+
+
+
+
 
 module.exports = router;
