@@ -40,7 +40,7 @@
 </form>
 
 <h3>Add Guests</h3>
-<form method="GET" action="/potlucks/{{potluckItem._id}}/process-guests">
+<form method="POST" action="/potlucks/{{potluckItem._id}}/process-guests">
     <input type="search" name="users" placeholder="Invite ..."/>
     <br/>
     <button>Add</button>

@@ -103,6 +103,9 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
     });
 });
 
+
+
+//potluck settings
 router.get("/potlucks/:potluckId/edit", (req, res, next) => {
   const { potluckId } = req.params;
 
@@ -133,6 +136,8 @@ router.post("/process-edit/:potluckId", (req, res, next) => {
     });
 });
 
+
+//add food and drinks
 router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
   const {potluckId}= req.params;
   const {foodAndDrink}= req.body;
@@ -158,8 +163,11 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
 //   const {guests}= req.body;
   
   
-//   User.findOne({fullName: guests});
-
+//   User.findOne({fullName: {guests}})
+//   .then ((userResult)=>{
+//     console.log(userResult,"--------");
+//   }
+// });
 
 //   Potluck.findByIdAndUpdate(
 //     potluckId,
