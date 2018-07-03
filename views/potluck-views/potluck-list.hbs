@@ -1,16 +1,50 @@
-<h2>Your Potlucks</h2>
+<h1>Your Potlucks</h1>
 
+
+
+    {{#if potluckArrayHost}}
+    <h2>You're hosting at :</h2>
 <ul>
-    {{#each potluckArray}}
+    {{#each potluckArrayHost}}
+    
     <li>
-        <h3>{{this.name}}</h3>
+        <h4>{{this.name}}</h4>
 
         <a href="/potlucks/{{this._id}}">
             <img src="{{this.pictureUrl}}" width="100px">
         </a>
     </li>
-    {{else}}
-    <p>You don't have any potlucks yet.</p>
+
     {{/each}}
-    <a href="/potlucks/create"> + New Potluck</a>
 </ul>
+
+    {{#else}}
+
+    <p>You don't have any potlucks yet.</p>
+    <a href="/potlucks/create"> + New Potluck</a>
+
+    {{/else}}
+    {{/if}}
+
+{{#if potluckArrayGuests}}
+</ul>
+    <h2>You're invited at :</h2>
+ <ul>   
+    {{#each potluckArrayGuests}}
+    <li>
+        <h4>{{this.name}}</h4>
+
+        <a href="/potlucks/{{this._id}}">
+            <img src="{{this.pictureUrl}}" width="100px">
+        </a>
+    </li>
+    {{/each}}
+</ul>
+
+    {{#else}}
+    <h2>No invitation yet :(</h2>
+    {{/else}}
+    {{/if}}
+
+
+   
