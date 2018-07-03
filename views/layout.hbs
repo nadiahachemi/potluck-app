@@ -2,23 +2,40 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
 </head>
 
 <body>
-  <nav>
-    <a href="/">Home</a>
-    {{#if blahUser}}
-    <strong>{{blahUser.fullName}}</strong>
-    <a href="/logout">Log Out</a>
-    <a href="/potlucks">Your Potlucks</a>
-    <a href="/settings">Settings</a>
-    {{else}}
-    <a href="/login">Log In</a>
-    <a href="/signup">Sign Up</a>
-    {{/if}}
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">
+      <img src="/images/logo.png" alt="POTLUCK" width="50px">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/">Home
+          <span class="sr-only">(current)</span>
+        </a>
+        {{#if blahUser}}
+        <strong>{{blahUser.fullName}}</strong>
+        <a class="nav-item nav-link" href="/logout">Log Out</a>
+        <a class="nav-item nav-link" href="/potlucks">Your Potlucks</a>
+        <a class="nav-item nav-link" href="/settings">Settings</a>
+        {{else}}
+        <a class="nav-item nav-link" href="/login">Log In</a>
+        <a class="nav-item nav-link" href="/signup">Sign Up</a>
+        {{/if}}
+      </div>
+    </div>
   </nav>
+
 
   {{{body}}}
 

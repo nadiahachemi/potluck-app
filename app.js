@@ -69,7 +69,7 @@ app.use(flash());
 passportSetup(app);
 
 // default value for title local
-app.locals.title = "Potluck - Generated with IronGenerator";
+app.locals.title = "Potluck";
 
 // Connect "index.js" to your app
 const index = require("./routes/index");
