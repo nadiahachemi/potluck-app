@@ -2,7 +2,7 @@ const express = require("express");
 
 const Potluck = require("../models/potluck-model.js");
 
-const User = require("../models/user-model.js")
+// const User = require("../models/user-model.js")
 
 const router = express.Router();
 
@@ -28,7 +28,9 @@ router.post("/process-potlucks", (req, res, next) => {
     return;
   }
 
-  const { name, location, date, pictureUrl, guests } = req.body;
+  let { name, location, date, guests, pictureUrl } = req.body;
+
+  pictureUrl = pictureUrl || undefined;
 
   Potluck.create({
     host: req.user._id,
