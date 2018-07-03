@@ -20,12 +20,22 @@ nav {
   width: 100%; }
 
 footer {
-  height: 70px;
+  height: 30px;
   width: 100%;
-  position: fixed;
+  position: relative;
   bottom: 0;
   align-self: center;
   background-color: black;
   color: white; }
+
+h2 {
+  text-align: center;
+  padding: 50px 0; }
+
+.grey {
+  background-color: #cecece; }
+
+.white {
+  background-color: white; }
 
 /*# sourceMappingURL=style.css.map */

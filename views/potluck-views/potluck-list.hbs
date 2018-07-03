@@ -1,16 +1,20 @@
 <h2>Your Potlucks</h2>
 
-<ul>
+<div class="row">
     {{#each potluckArray}}
-    <li>
-        <h3>{{this.name}}</h3>
-
-        <a href="/potlucks/{{this._id}}">
-            <img src="{{this.pictureUrl}}" width="100px">
-        </a>
-    </li>
+    <div class="col-sm-4">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 200px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
     {{else}}
-    <p>You don't have any potlucks yet.</p>
+    <p>You don't have any potlucks yet</p>
     {{/each}}
-    <a href="/potlucks/create"> + New Potluck</a>
-</ul>
+</div>
+<a href="/potlucks/create"> + New Potluck</a>
+
+<h2>Potlucks you're invited in:</h2>

@@ -126,33 +126,29 @@ router.post("/process-edit/:potluckId", (req, res, next) => {
     });
 });
 
-router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
-  const {potluckId}= req.params;
-  const {foodAndDrink}= req.body;
-  console.log({foodAndDrink});
+router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
+  const { potluckId } = req.params;
+  const { foodAndDrink } = req.body;
+  console.log({ foodAndDrink });
 
   Potluck.findByIdAndUpdate(
     potluckId,
-     {$push:{foodAndDrink}},
-    {runValidators: true}
+    { $push: { foodAndDrink } },
+    { runValidators: true }
   )
-  .then((potluckDoc)=>{
-    res.redirect(`/potlucks/${potluckId}`)
-  })
-  .catch((err)=>{
-    next(err);
-  })
+    .then(potluckDoc => {
+      res.redirect(`/potlucks/${potluckId}`);
+    })
+    .catch(err => {
+      next(err);
+    });
 });
-
-
 
 // router.post("/potlucks/:potluckId/process-guests", (req, res, next)=>{
 //   const {potluckId}= req.params;
 //   const {guests}= req.body;
-  
-  
-//   User.findOne({fullName: guests});
 
+//   User.findOne({fullName: guests});
 
 //   Potluck.findByIdAndUpdate(
 //     potluckId,
@@ -166,9 +162,5 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
 //     next(err);
 //   })
 // });
-
-
-
-
 
 module.exports = router;
