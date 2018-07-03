@@ -1,42 +1,53 @@
-<div>
-
+<h2>{{potluckItem.name}}
     <a href="/potlucks/{{potluckItem._id}}/edit">Edit Potluck</a>
+</h2>
+<hr>
 
-    <h2>{{potluckItem.name}}</h2>
-    <hr>
-
-    <div class="row">
-        <div class="col">
-            <h3>{{potluckItem.host.fullName}}</h3>
-            <h3>Coming on {{potluckItem.date}}</h3>
-            <h3> At {{potluckItem.location}}</h3>
-        </div>
-        <div class="white col-6">
-            <h3>Food and Drinks:</h3>
-            <li> {{potluckItem.foodAndDrink}}</li>
-        </div>
-        <div class="col">
-            <h3>Guests: </h3>
-            {{#each potluckItem.guests}}
-            <h3>{{this.fullName}}</h3>
-            {{/each}}
-        </div>
+<div class="row">
+    <div class="col">
+        <h3>Hosted by:</h3>
+        <p>{{potluckItem.host.fullName}}</p>
+        <h3>When ?</h3>
+        <p>{{potluckItem.date}}</p>
+        <h3>Where ?</h3>
+        <p>
+            <img src="/images/location.png" height="25px"> {{potluckItem.location}}
+        </p>
+        {{!--
+        <div id="countdown">
+            <div id='tiles'></div>
+            <div class="labels">
+                <li>Days</li>
+                <li>Hours</li>
+                <li>Mins</li>
+                <li>Secs</li>
+            </div>
+        </div> --}}
     </div>
 
 
-    <h3>Add Food or Drink</h3>
-    <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
-        <input type="text" name="foodAndDrink" placeholder="Bring ..." />
-        <br/>
-        <button>Add</button>
+    <div class="white col-6">
+        <h3>Food and Drinks:</h3>
+        <li> {{potluckItem.foodAndDrink}}</li>
+        <h5>Add Food or Drink</h5>
+        <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
+            <input type="text" name="foodAndDrink" placeholder="Bring ..." />
+            <br/>
+            <button>Add</button>
+        </form>
+    </div>
 
-    </form>
 
-    <h3>Add Guests</h3>
-    <form method="GET" action="/potlucks/{{potluckItem._id}}/process-guests">
-        <input type="search" name="users" placeholder="Invite ..." />
-        <br/>
-        <button>Add</button>
-
-    </form>
+    <div class="right col">
+        <h3>Guests: </h3>
+        {{#each potluckItem.guests}}
+        <h3>{{this.fullName}}</h3>
+        {{/each}}
+        <h5>Add Guests</h5>
+        <form method="GET" action="/potlucks/{{potluckItem._id}}/process-guests">
+            <input type="search" name="users" placeholder="Invite ..." />
+            <br/>
+            <button>Add</button>
+        </form>
+    </div>
 </div>
