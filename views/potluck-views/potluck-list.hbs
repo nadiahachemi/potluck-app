@@ -1,6 +1,53 @@
 <h2>Your Potlucks</h2>
 
 <div class="row">
+    {{#if potluckArrayHost}} {{#each potluckArrayHost}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p>You don't have any potlucks yet</p>
+    {{/each}} {{/if}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="/images/+.gif" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">New Potluck</h5>
+                <a href="/potlucks/create" class="btn btn-primary">Create a Potluck</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{!--
+<a href="/potlucks/create"> + New Potluck</a> --}}
+
+<h2>Potlucks you're invited at</h2>
+
+<div class="row">
+    {{#if potluckArrayGuests}} {{#each potluckArrayGuests}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p>No invitation yet ☹</p>
+    {{/each}} {{/if}}
+</div>
+
+
+{{!--
+<div class="row">
     {{#each potluckArray}}
     <div class="col-sm-4">
         <div class="card text-center">
@@ -15,6 +62,4 @@
     <p>You don't have any potlucks yet</p>
     {{/each}}
 </div>
-<a href="/potlucks/create"> + New Potluck</a>
-
-<h2>Potlucks you're invited in:</h2>
+<a href="/potlucks/create"> + New Potluck</a> --}}

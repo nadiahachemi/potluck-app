@@ -58,10 +58,14 @@ router.get("/potlucks", (req, res, next) => {
     res.redirect("/login");
     return;
   }
-
-  Potluck.find({ host: req.user._id })
+  Potluck.find({ host: req.user._id }).then(potluckResults => {
+    console.log(potluckResults, "----------------------");
+    res.locals.potluckArrayHost = potluckResults;
+  });
+  Potluck.find({ guests: req.user._id })
     .then(potluckResults => {
-      res.locals.potluckArray = potluckResults;
+      console.log(potluckResults, "----------------------");
+      res.locals.potluckArrayGuests = potluckResults;
       res.render("potluck-views/potluck-list.hbs");
     })
     .catch(err => {
@@ -72,7 +76,7 @@ router.get("/potlucks", (req, res, next) => {
 //route pour acceder au detail du potluck
 router.get("/potlucks/:potluckId", (req, res, next) => {
   const { potluckId } = req.params;
-  console.log({ potluckId });
+
   if (!req.user) {
     //req.flash is defined by the "connect-flash" package
     req.flash("error", "you must be logged in");
@@ -86,7 +90,6 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
     .populate("host")
 
     .then(potluckDoc => {
-      console.log(potluckDoc);
       res.locals.potluckItem = potluckDoc;
       res.render("potluck-views/potlucks-details.hbs");
     })
@@ -129,7 +132,6 @@ router.post("/process-edit/:potluckId", (req, res, next) => {
 router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
   const { potluckId } = req.params;
   const { foodAndDrink } = req.body;
-  console.log({ foodAndDrink });
 
   Potluck.findByIdAndUpdate(
     potluckId,
