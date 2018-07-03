@@ -79,9 +79,8 @@ app.use("/", index);
 const authRouter = require("./routes/auth-route.js");
 app.use("/", authRouter);
 
-
-const potlucksRouter= require ("./routes/potlucks-router.js");
+// Connect "potlucks-router.js" to your app
+const potlucksRouter = require("./routes/potlucks-router.js");
 app.use("/", potlucksRouter);
-
 
 module.exports = app;

@@ -4,11 +4,18 @@
     {{#each potluckArray}}
     <li>
         <h3>{{this.name}}</h3>
+<<<<<<< HEAD
         
         <a href="/potlucks/{{this._id}}"><img src="{{this.pictureUrl}}"></a>
+=======
+
+        <a href="/potlucks/{{this._id}}">
+            <img src="{{this.pictureUrl}}">
+        </a>
+>>>>>>> 32cb4420d25434f0402fdd9c799cfd2fb8046f59
     </li>
     {{else}}
     <p>You don't have any potlucks yet.</p>
     {{/each}}
-    <a href="/potlucks/create">+ New Potluck</a>
+    <a href="/potlucks/create"> + New Potluck</a>
 </ul>

@@ -1,17 +1,24 @@
 <h1>Dash Board</h1>
 
+<a href="/potlucks/{{potluckItem._id}}/edit">Edit Potluck</a>
+
 <h2>{{potluckItem.name}}</h2>
 
 <div>
 
-<h2> Organized by {{potluckItem.host.fullName}}</h2>
+    <h2>{{potluckItem.host.fullName}}</h2>
 
 
-<h2>Coming on {{potluckItem.date}}</h2>
+    <h2>Coming on {{potluckItem.date}}</h2>
 
-<h2> At {{potluckItem.location}}</h2>
+    <h2> At {{potluckItem.location}}</h2>
 
-<h2>Food and Drinks:</h2> 
+    <h2>with : </h2>
+    {{#each potluckItem.guests}}
+    <h3>{{this.fullName}}</h3>
+    {{/each}}
+
+    <h2>Food and Drinks:</h2> 
 
 <li>  {{potluckItem.foodAndDrink}}</li>
 
@@ -33,4 +40,4 @@
 
 </form>
 
-
+</div>
