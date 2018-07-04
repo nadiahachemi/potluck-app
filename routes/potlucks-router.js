@@ -2,7 +2,7 @@ const express = require("express");
 
 const Potluck = require("../models/potluck-model.js");
 
-// const User = require("../models/user-model.js")
+const User = require("../models/user-model.js");
 
 const router = express.Router();
 
@@ -139,6 +139,9 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
     { runValidators: true }
   )
     .then(potluckDoc => {
+      //test
+      res.locals.potluckArrayFoodAndDrink = potluckDoc;
+      // fin du test
       res.redirect(`/potlucks/${potluckId}`);
     })
     .catch(err => {
@@ -146,23 +149,23 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
     });
 });
 
-// router.post("/potlucks/:potluckId/process-guests", (req, res, next)=>{
-//   const {potluckId}= req.params;
-//   const {guests}= req.body;
+router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
+  const { potluckId } = req.params;
+  const { guests } = req.body;
 
-//   User.findOne({fullName: guests});
-
-//   Potluck.findByIdAndUpdate(
-//     potluckId,
-//      {$push:{guests}},
-//     {runValidators: true}
-//   )
-//   .then((potluckDoc)=>{
-//     res.redirect(`/potlucks/${potluckId}`)
-//   })
-//   .catch((err)=>{
-//     next(err);
-//   })
-// });
+  User.findOne({ email: guests })
+    .then(userResult => {
+      Potluck.findByIdAndUpdate(
+        potluckId,
+        { $push: { guests: userResult._id } },
+        { runValidators: true }
+      ).then(() => {
+        res.redirect(`/potlucks/${potluckId}`);
+      });
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 module.exports = router;
