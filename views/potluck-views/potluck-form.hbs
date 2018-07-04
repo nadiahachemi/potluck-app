@@ -1,7 +1,7 @@
 <h2>Create a Potluck</h2>
 
-<form method="POST" action="/process-potlucks">
-    <label>
+<form method="POST" action="/process-potlucks" enctype="multipart/form-data">
+<label>
         Name:
         <input type="text" name="name" placeholder="My super birthday party!">
     </label>
@@ -29,7 +29,7 @@
 
     <label>
         Picture URL:
-        <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg">
+        <input type="file" name="pictureUpload"/>
     </label>
     <br>
 

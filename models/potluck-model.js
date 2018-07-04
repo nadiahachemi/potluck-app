@@ -6,7 +6,7 @@ const potluckSchema = new Schema(
   {
     name: { type: String, required: true },
     location:{
-      type: {type: String, default:"Point"}, 
+      type: {type: String, required: true }, // default:"Point"
       coordinates: [
         {type:Number}
       ]
@@ -36,9 +36,6 @@ const potluckSchema = new Schema(
   { timestamps: true }
 );
 
-// userSchema.virtual("isAdmin").get(function() {
-//   return this.role === "admin";
-// });
 
 const Potluck = mongoose.model("Potluck", potluckSchema);
 
