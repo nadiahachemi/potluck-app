@@ -32,4 +32,8 @@ h2 {
 p {
   text-align: center; }
 
+.my-google-map {
+  height: 200px;
+  width: 200px; }
+
 /*# sourceMappingURL=style.css.map */

@@ -28,17 +28,19 @@ router.post("/process-potlucks", (req, res, next) => {
     return;
   }
 
-  let { name, location, date, guests, pictureUrl } = req.body;
+  let { name, date, guests, pictureUrl, latitude, longitude } = req.body;
+  //create the geoJson structure for our ...
+  let location = {coordinates:[latitude, longitude]};
 
   pictureUrl = pictureUrl || undefined;
 
   Potluck.create({
     host: req.user._id,
     name,
-    location,
     date,
     pictureUrl,
-    guests
+    guests,
+    location
   })
     .then(potluckDoc => {
       req.flash("success", "Potluck created!");

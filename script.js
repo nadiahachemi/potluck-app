@@ -1,2 +1,0 @@
-
-//console.log(google.maps);

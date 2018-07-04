@@ -11,6 +11,7 @@
         <p>{{potluckItem.date}}</p>
         <h3>Where ?</h3>
         <p>
+            <div class="my-google-map"></div>
             <img src="/images/location.png" height="25px"> {{potluckItem.location}}
         </p>
         {{!--
@@ -37,14 +38,11 @@
         </form>
     </div>
 
-<<<<<<< HEAD
     <h3>Add Guests</h3>
     <form method="POST" action="/potlucks/{{potluckItem._id}}/process-guests">
         <input type="text" name="guests" placeholder="Invite ..." />
         <br/>
         <button>Add</button>
-=======
->>>>>>> 5aad8b70ace259e443d1c827f76882fa115ac28e
 
     <div class="right col">
         <h3>Guests: </h3>
@@ -59,3 +57,4 @@
         </form>
     </div>
 </div>
+
