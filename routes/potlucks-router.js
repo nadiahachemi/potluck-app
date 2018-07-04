@@ -1,10 +1,23 @@
 const express = require("express");
+const multer = require("multer");
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
 
 const Potluck = require("../models/potluck-model.js");
-
 const User = require("../models/user-model.js");
 
 const router = express.Router();
+
+cloudinary.config({
+  cloud_name: process.env.cloudinary_name,
+  api_key: process.env.cloudinary_key,
+  api_secret: process.env.cloudinary_secret
+});
+const storage = cloudinaryStorage({
+  cloudinary,
+  folder: "room-pictures"
+});
+const uploader = multer({ storage });
 
 // Route pour créer un potluck
 router.get("/potlucks/create", (req, res, next) => {
@@ -19,35 +32,44 @@ router.get("/potlucks/create", (req, res, next) => {
   res.render("potluck-views/potluck-form.hbs");
 });
 
-router.post("/process-potlucks", (req, res, next) => {
-  if (!req.user) {
-    // req.flash() is defined by the "connect-flash" package
-    req.flash("error", "You must be logged in");
-    // redirect away if you aren't logged in (authorization!)
-    res.redirect("/login");
-    return;
-  }
+// "pictureUpload" is our file input's name attribute
+router.post(
+  "/process-potlucks",
+  uploader.single("pictureUpload"),
+  (req, res, next) => {
+    if (!req.user) {
+      // req.flash() is defined by the "connect-flash" package
+      req.flash("error", "You must be logged in");
+      // redirect away if you aren't logged in (authorization!)
+      res.redirect("/login");
+      return;
+    }
 
-  let { name, location, date, guests, pictureUrl } = req.body;
+    let { name, date, guests, pictureUrl, latitude, longitude } = req.body;
+    //multer stores the file information in "req.file"
+    let { secure_url } = req.file;
+    //create the geoJson structure for our ...
+    let location = { coordinates: [latitude, longitude] };
 
-  pictureUrl = pictureUrl || undefined;
+    pictureUrl = pictureUrl || undefined;
 
-  Potluck.create({
-    host: req.user._id,
-    name,
-    location,
-    date,
-    pictureUrl,
-    guests
-  })
-    .then(potluckDoc => {
-      req.flash("success", "Potluck created!");
-      res.redirect("/potlucks");
+    Potluck.create({
+      host: req.user._id,
+      name,
+      date,
+      pictureUrl: secure_url,
+      guests,
+      location
     })
-    .catch(err => {
-      next(err);
-    });
-});
+      .then(potluckDoc => {
+        req.flash("success", "Potluck created!");
+        res.redirect("/potlucks");
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+);
 
 // Route pour afficher la page avec tous les potlucks
 router.get("/potlucks", (req, res, next) => {
@@ -59,12 +81,10 @@ router.get("/potlucks", (req, res, next) => {
     return;
   }
   Potluck.find({ host: req.user._id }).then(potluckResults => {
-    console.log(potluckResults, "----------------------");
     res.locals.potluckArrayHost = potluckResults;
   });
   Potluck.find({ guests: req.user._id })
     .then(potluckResults => {
-      console.log(potluckResults, "----------------------");
       res.locals.potluckArrayGuests = potluckResults;
       res.render("potluck-views/potluck-list.hbs");
     })
@@ -99,6 +119,7 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
     });
 });
 
+//potluck settings
 router.get("/potlucks/:potluckId/edit", (req, res, next) => {
   const { potluckId } = req.params;
 
@@ -129,6 +150,22 @@ router.post("/process-edit/:potluckId", (req, res, next) => {
     });
 });
 
+// Route pour supprimer un potluck
+router.post("/potlucks/:potluckId/delete", (req, res, next) => {
+  // Get the ID from the URL
+  // const bookId = req.params.bookId
+  const { potluckId } = req.params;
+
+  Potluck.findByIdAndRemove(potluckId)
+    .then(potluckDoc => {
+      res.redirect("/potlucks");
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+// Route pour ajouter de la nourriture
 router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
   const { potluckId } = req.params;
   const { foodAndDrink } = req.body;
@@ -163,6 +200,7 @@ router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
         res.redirect(`/potlucks/${potluckId}`);
       });
     })
+
     .catch(err => {
       next(err);
     });

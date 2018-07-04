@@ -1,34 +1,39 @@
-<h2>Edit Potluck {{potluckItem.name}}</h2>
+<h2>Edit {{potluckItem.name}}</h2>
 
-<form method="POST" action="/process-edit/{{potluckItem._id}}">
-    <label>
-        Name:
-        <input type="text" name="name" placeholder="My super birthday party!" value="{{potluckItem.name}}">
-    </label>
-    <br>
+<div class="edit">
+    <form method="POST" action="/process-edit/{{potluckItem._id}}">
+        <label>
+            Name:
+            <input type="text" name="name" placeholder="My super birthday party!" value="{{potluckItem.name}}">
+        </label>
+        <br>
 
-    <label>
-        Location:
-        <input type="text" name="description" placeholder="666, Unicorn Street" value="{{potluckItem.location}}">
-    </label>
-    <br>
+        <label>
+            Location:
+            <input type="text" class="location-input" name="location" value="{{potluckItem.location}}">
+        </label>
+        <br>
 
-    <label>
-        Date:
-        <input type="date" name="date" value="{{potluckItem.date}}">
-    </label>
-    <br> {{!--
-    <label>
-        Search
-        <input type="search" name="guests" placeholder="John Doe" value="{{potluckItem.guests}}">
-    </label>
-    <br> --}}
+        <input type="hidden" name="latitude" class="lat-input" />
+        <input type="hidden" name="longitude" class="long-input" />
 
-    <label>
-        Picture URL:
-        <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg" value="{{potluckItem.pictureUrl}}">
-    </label>
-    <br>
+        <label>
+            Date:
+            <input type="date" name="date" value="{{potluckItem.date}}">
+        </label>
+        <br>
 
-    <button>Save Changes</button>
-</form>
+        <label>
+            Picture URL:
+            <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg" value="{{potluckItem.pictureUrl}}">
+        </label>
+        <br>
+
+        <button>Save Changes</button>
+    </form>
+
+    <form action="/potlucks/{{potluckItem._id}}/delete" method="POST">
+        <button>Delete this potluck</button>
+    </form>
+
+</div>

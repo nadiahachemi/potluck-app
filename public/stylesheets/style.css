@@ -6,11 +6,11 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 .home-page {
-  background-image: url("../images/fond-homepage.jpg");
+  background-image: url("../images/fond2-homepage.jpg");
   background-position: center;
   text-align: center;
   color: white;
-  height: 600px; }
+  height: 750px; }
 
 nav {
   background-color: black;
@@ -19,7 +19,7 @@ nav {
 footer {
   height: 30px;
   width: 100%;
-  position: relative;
+  position: absolute;
   bottom: 0;
   align-self: center;
   background-color: black;
@@ -31,5 +31,17 @@ h2 {
 
 p {
   text-align: center; }
+
+.my-google-map {
+  height: 200px;
+  width: 200px; }
+
+.edit {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  align-content: center; }
 
 /*# sourceMappingURL=style.css.map */

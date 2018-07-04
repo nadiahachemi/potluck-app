@@ -1,4 +1,16 @@
 <div class="home-page">
     <h1>{{title}}</h1>
     <p>Organizing an event never felt that easy!</p>
+
+    {{#if blahUser}}
+    <p class="nav-item nav-link active"> Welcome back,
+        <strong>{{blahUser.fullName}}</strong> !
+    </p>
+    <a class="nav-item nav-link" href="/potlucks">Your Potlucks</a>
+    {{else}}
+    <p>Join the party :D</p>
+    <a class="nav-item nav-link" href="/signup">Sign Up</a>
+    <p>Already have an account?</p>
+    <a class="nav-item nav-link" href="/login">Log In</a>
+    {{/if}}
 </div>

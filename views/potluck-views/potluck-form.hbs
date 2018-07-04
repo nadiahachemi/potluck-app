@@ -1,6 +1,7 @@
 <h2>Create a Potluck</h2>
 
-<form method="POST" action="/process-potlucks">
+{{!-- always method="POST" & enctype="multipart/form-data" for file uploads --}}
+<form method="POST" action="/process-potlucks" enctype="multipart/form-data">
     <label>
         Name:
         <input type="text" name="name" placeholder="My super birthday party!">
@@ -9,24 +10,22 @@
 
     <label>
         Location:
-        <input type="text" name="location" placeholder="666, Unicorn Street">
+        <input type="text" class="location-input" name="location" placeholder="666, Unicorn Street">
     </label>
     <br>
+
+    <input type="hidden" name="latitude" class="lat-input" />
+    <input type="hidden" name="longitude" class="long-input" />
 
     <label>
         Date:
         <input type="date" name="date">
     </label>
-    <br> {{!--
-    <label>
-        Search
-        <input type="search" name="guests" placeholder="John Doe">
-    </label>
-    <br> --}}
+    <br>
 
     <label>
-        Picture URL:
-        <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg">
+        Picture:
+        <input type="file" name="pictureUpload">
     </label>
     <br>
 

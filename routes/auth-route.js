@@ -1,10 +1,18 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
+const nodemailer = require("nodemailer");
 
 const User = require("../models/user-model");
 
 const router = express.Router();
+const transport = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: process.env.gmail_email,
+    pass: process.env.gmail_password
+  }
+});
 
 router.get("/signup", (req, res, next) => {
   res.render("auth-views/signup-form.hbs");
@@ -23,8 +31,18 @@ router.post("/process-signup", (req, res, next) => {
   const encryptedPassword = bcrypt.hashSync(originalPassword, 10);
   User.create({ fullName, email, encryptedPassword })
     .then(userDoc => {
-      req.flash("success", "signed up successfully! Try to log in baby!");
-      res.redirect("/");
+      transport.sendMail({
+          from: "Potluck Users <potuse@example.com>",
+          to: `${fullName} <${email}>`,
+          subject: "Thank you for joining Potluck App!",
+          text: `Welcome, ${fullName}! Thank you for joining Potluck App :)`,
+          html: `<h1>Welcome, ${fullName}!</h1>
+              <p>Thank you for joining Potluck App!</p>`
+        })
+        .then(() => {
+          req.flash("success", "signed up successfully! Try to log in baby!");
+          res.redirect("/");
+        });
     })
     .catch(err => {
       next(err);
