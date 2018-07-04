@@ -24,10 +24,12 @@
           <span class="sr-only">(current)</span>
         </a>
         {{#if blahUser}}
-        <strong>{{blahUser.fullName}}</strong>
         <a class="nav-item nav-link" href="/logout">Log Out</a>
-        <a class="nav-item nav-link" href="/potlucks">Your Potlucks</a>
         <a class="nav-item nav-link" href="/settings">Settings</a>
+        <a class="nav-item nav-link" href="/potlucks">Your Potlucks</a>
+        <p class="nav-item nav-link active">
+          <strong>{{blahUser.fullName}}</strong>
+        </p>
         {{else}}
         <a class="nav-item nav-link" href="/login">Log In</a>
         <a class="nav-item nav-link" href="/signup">Sign Up</a>
