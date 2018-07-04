@@ -2,7 +2,7 @@ const express = require("express");
 
 const Potluck = require("../models/potluck-model.js");
 
-// const User = require("../models/user-model.js")
+const User = require("../models/user-model.js")
 
 const router = express.Router();
 
@@ -58,28 +58,24 @@ router.get("/potlucks", (req, res, next) => {
     res.redirect("/login");
     return;
   }
-Potluck.find({ host: req.user._id })
+  Potluck.find({ host: req.user._id })
     .then(potluckResults => {
-      console.log(potluckResults,"----------------------")
-      res.locals.potluckArrayHost = potluckResults;
-    })
-Potluck.find({ guests: req.user._id })
-      .then(potluckResults => {
-        console.log(potluckResults,"----------------------")
-        res.locals.potluckArrayGuests = potluckResults;
-        res.render("potluck-views/potluck-list.hbs");
+    res.locals.potluckArrayHost = potluckResults;
+  });
+  Potluck.find({ guests: req.user._id })
+    .then(potluckResults => {
+      res.locals.potluckArrayGuests = potluckResults;
+      res.render("potluck-views/potluck-list.hbs");
     })
     .catch(err => {
       next(err);
     });
-
-  });
-
+});
 
 //route pour acceder au detail du potluck
 router.get("/potlucks/:potluckId", (req, res, next) => {
   const { potluckId } = req.params;
- 
+
   if (!req.user) {
     //req.flash is defined by the "connect-flash" package
     req.flash("error", "you must be logged in");
@@ -93,7 +89,6 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
     .populate("host")
 
     .then(potluckDoc => {
-      
       res.locals.potluckItem = potluckDoc;
       res.render("potluck-views/potlucks-details.hbs");
     })
@@ -136,54 +131,43 @@ router.post("/process-edit/:potluckId", (req, res, next) => {
     });
 });
 
-
-//add food and drinks
-router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next)=>{
-  const {potluckId}= req.params;
-  const {foodAndDrink}= req.body;
- 
+router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
+  const { potluckId } = req.params;
+  const { foodAndDrink } = req.body;
 
   Potluck.findByIdAndUpdate(
     potluckId,
-     {$push:{foodAndDrink}},
-    {runValidators: true}
+    { $push: { foodAndDrink } },
+    { runValidators: true }
   )
-  .then((potluckDoc)=>{
-    res.redirect(`/potlucks/${potluckId}`)
+    .then(potluckDoc => {
+      res.redirect(`/potlucks/${potluckId}`);
+    })
+    .catch(err => {
+      next(err);
+    });
+});
+
+router.post("/potlucks/:potluckId/process-guests", (req, res, next)=>{
+  const {potluckId}= req.params;
+  const {guests}= req.body;
+ 
+  
+  User.findOne({email: guests})
+  .then((userResult)=>{
+    Potluck.findByIdAndUpdate(
+      potluckId,
+      {$push:{"guests": userResult._id}},
+      {runValidators: true}
+    ).then(() => {
+      res.redirect(`/potlucks/${potluckId}`);
+    });
   })
+  
   .catch((err)=>{
     next(err);
   })
+  
 });
-
-
-
-// router.post("/potlucks/:potluckId/process-guests", (req, res, next)=>{
-//   const {potluckId}= req.params;
-//   const {guests}= req.body;
-  
-  
-//   User.findOne({fullName: {guests}})
-//   .then ((userResult)=>{
-//     console.log(userResult,"--------");
-//   }
-// });
-
-//   Potluck.findByIdAndUpdate(
-//     potluckId,
-//      {$push:{guests}},
-//     {runValidators: true}
-//   )
-//   .then((potluckDoc)=>{
-//     res.redirect(`/potlucks/${potluckId}`)
-//   })
-//   .catch((err)=>{
-//     next(err);
-//   })
-// });
-
-
-
-
 
 module.exports = router;

@@ -1,50 +1,63 @@
-<h1>Your Potlucks</h1>
+<h2>Your Potlucks</h2>
+
+<div class="row">
+    {{#if potluckArrayHost}} {{#each potluckArrayHost}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p>You don't have any potlucks yet</p>
+    {{/each}} {{/if}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="/images/+.gif" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">New Potluck</h5>
+                <a href="/potlucks/create" class="btn btn-primary">Create a Potluck</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>Potlucks you're invited at</h2>
+
+<div class="row">
+    {{#if potluckArrayGuests}} {{#each potluckArrayGuests}}
+    <div class="col-sm-3">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 180px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p>No invitation yet ☹</p>
+    {{/each}} {{/if}}
+</div>
 
 
-
-    {{#if potluckArrayHost}}
-    <h2>You're hosting at :</h2>
-<ul>
-    {{#each potluckArrayHost}}
-    
-    <li>
-        <h4>{{this.name}}</h4>
-
-        <a href="/potlucks/{{this._id}}">
-            <img src="{{this.pictureUrl}}" width="100px">
-        </a>
-    </li>
-
+{{!--
+<div class="row">
+    {{#each potluckArray}}
+    <div class="col-sm-4">
+        <div class="card text-center">
+            <img class="card-img-top" src="{{this.pictureUrl}}" style="height: 200px; width: 100%">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <a href="/potlucks/{{this._id}}" class="btn btn-primary">See Potluck</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <p>You don't have any potlucks yet</p>
     {{/each}}
-</ul>
-
-    {{#else}}
-
-    <p>You don't have any potlucks yet.</p>
-    <a href="/potlucks/create"> + New Potluck</a>
-
-    {{/else}}
-    {{/if}}
-
-{{#if potluckArrayGuests}}
-</ul>
-    <h2>You're invited at :</h2>
- <ul>   
-    {{#each potluckArrayGuests}}
-    <li>
-        <h4>{{this.name}}</h4>
-
-        <a href="/potlucks/{{this._id}}">
-            <img src="{{this.pictureUrl}}" width="100px">
-        </a>
-    </li>
-    {{/each}}
-</ul>
-
-    {{#else}}
-    <h2>No invitation yet :(</h2>
-    {{/else}}
-    {{/if}}
-
-
-   
+</div>
+<a href="/potlucks/create"> + New Potluck</a> --}}
