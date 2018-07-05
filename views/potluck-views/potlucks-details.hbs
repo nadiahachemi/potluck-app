@@ -27,25 +27,32 @@
     </div>
 
 
-    <div class="white col-6">
+   <div class="white col-6">
+      
+       <h3>Food and Drinks:</h3>
+       <ul>
+      {{#each potluckItem.foodAndDrink}}
+       <li>
+            <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-bringFoodAndDrink">
+            <input type="hidden" name="foodId" value="{{this._id}}" />
+            <button type="submit"><img src="{{this.pictureUrl}}" alt="ok" width="50px" name="pictureUrl"></button> 
+           {{this.name}}
+           </form>
 
-        <h3>Food and Drinks:</h3>
-        {{#each potluckItem.foodAndDrink}}
-        <li>
-            <form method="POST" action="/potlucks/{{potluckItem._id}}/process-bringFoodAndDrink">
-                <img src="{{this.pictureUrl}}" alt="ok" width="50px" id="checkbox"> {{this.name}}
-                <input type="checkbox" name="user">
-            </form>
-            {{/each}}
-
-        </li>
-        <h5>Add Food or Drink</h5>
-        <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
-            <input type="text" name="name" placeholder="Bring ..." />
-            <br/>
-            <button>Add</button>
-        </form>
-    </div>
+            <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-removeFoodAndDrink">
+            <input type="hidden" name="foodIde" value="{{this._id}}" />
+            <button type="submit">Nah, we're not having that !</button>  
+            </form>   
+       </li>
+           {{/each}}
+       </ul>
+       <h5>Add Food or Drink</h5>
+       <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
+           <input type="text" name="name" placeholder="Bring ..." />
+           <br/>
+           <button>Add</button>
+       </form>
+   </div>
 
     <div class="right col">
         <h3>Guests: </h3>

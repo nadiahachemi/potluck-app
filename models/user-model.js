@@ -13,6 +13,7 @@ const userSchema = new Schema(
     },
     // role: {type: String, enum:["guest", "host"], default:"guest", required: true},
 
+    pictureUrl:{type:String, default:"https://image.freepik.com/free-icon/user-image-with-black-background_318-34564.jpg"},
     //only for users that sign up normally
     encryptedPassword: { type: String },
 
