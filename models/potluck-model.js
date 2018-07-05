@@ -6,7 +6,7 @@ const potluckSchema = new Schema(
   {
     name: { type: String, required: true },
     location:{
-      type: {type: String, required: true }, // default:"Point"
+      type: {type: String, required: true , default:"Point"},
       coordinates: [
         {type:Number}
       ]
@@ -31,7 +31,11 @@ const potluckSchema = new Schema(
       ref: "User",
       required: true
     },
-    foodAndDrink: [{ type: String }]
+    foodAndDrink: [
+      {
+      name: {type: String, require: true},
+      pictureUrl:{type: String, default: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAALVBMVEX///8AAACtra1hYWHw8PDz8/NkZGSsrKz7+/toaGjl5eXDw8P4+PhaWloxMTG2JgkLAAABK0lEQVR4nO3PgRHBQAAAwU+IIOi/XJow5t5uBXfj2NeZ7eexnC4Tuy3rWK5jZpfP4fbriK86Ocxz2Oewz2Gfwz6HfQ77HPY57HPY57DPYZ/DPod9Dvsc9jnsc9jnsM9hn8M+h30O+xz2Oexz2Oewz2Gfwz6HfQ77HPY57HPY57DPYZ/DPod9Dvsc9jnsc9jnsM9hn8M+h30O+xz2Oexz2Oewz2Gfwz6HfQ77HPY57HPY57DPYZ/DPod9Dvsc9jnsc9jnsM9hn8M+h30O+xz2Oexz2Oewz2Gfwz6HfQ77HPY57HPY57DPYZ/DPod9Dvsc9jnsc9jnsM9hn8M+h30O+xz2Oexz2Oewz2Gfwz6HfQ77HPY57HPY57DPYZ/Dvv84vG/neT2e63gtczve7YoVJLAkL+AAAAAASUVORK5CYII="}
+    }]
   },
   { timestamps: true }
 );

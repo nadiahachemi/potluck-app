@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
+const nodemailer = require("nodemailer");
 const cloudinaryStorage = require("multer-storage-cloudinary");
 
 const Potluck = require("../models/potluck-model.js");
@@ -16,14 +17,12 @@ const transport = nodemailer.createTransport({
   }
 });
 
-cloudinary.config({
-  cloud_name: "dx9ynexey",
-  api_key: "687438279721981",
-  api_secret: "dBpWFn_UjFY1YABfHZlZ0NxVDas"
-});
+// cloudinary.config({
+//   cloud_name: "dx9ynexey",
+//   api_key: "687438279721981",
+//   api_secret: "dBpWFn_UjFY1YABfHZlZ0NxVDas"
+// });
 
-const storage = cloudinaryStorage({ cloudinary, folder: "room-pictures" });
-const uploader = multer({ storage });
 
 cloudinary.config({
   cloud_name: process.env.cloudinary_name,
@@ -185,11 +184,11 @@ router.post("/potlucks/:potluckId/delete", (req, res, next) => {
 // Route pour ajouter de la nourriture
 router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
   const { potluckId } = req.params;
-  const { foodAndDrink } = req.body;
+  const { name } = req.body;
 
   Potluck.findByIdAndUpdate(
     potluckId,
-    { $push: { foodAndDrink } },
+    { $push:{foodAndDrink: {name}}},
     { runValidators: true }
   )
     .then(potluckDoc => {
@@ -203,6 +202,8 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
     });
 });
 
+
+//Ajouter un guest par email
 router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
   const { potluckId } = req.params;
   const { guests } = req.body;
@@ -240,5 +241,7 @@ router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
       next(err);
     });
 });
+
+
 
 module.exports = router;

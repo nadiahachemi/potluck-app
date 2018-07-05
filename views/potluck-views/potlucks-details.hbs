@@ -27,40 +27,34 @@
     </div>
 
 
-    <div class="white col-6">
-        <h3>Food and Drinks:</h3>
-<<<<<<< HEAD
-        {{!--
-        <li> {{potluckItem.foodAndDrink}}</li> --}} {{!--
-        <label>
-            <input type="checkbox"> {{potluckItem.foodAndDrink}}
-        </label> --}}
-        <label>
-            <input type="checkbox"> {{potluckItem.foodAndDrink}}
-        </label>
-=======
-        {{!-- {{#each potluckItem.foodAndDrink}}
-        <li> {{this}}</li>
-        {{/each}} --}}
-        {{#each potluckItem.foodAndDrink}}
-        <li>
-        
-        <input type="checkbox" value="{{this}}">{{this}}</input>
-        {{/each}}
-        </li>
->>>>>>> a946311438964660b04a5242f56dc382606d0a5c
-        <h5>Add Food or Drink</h5>
-        <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
-            <input type="text" name="foodAndDrink" placeholder="Bring ..." />
-            <br/>
-            <button>Add</button>
-        </form>
-    </div>
+   <div class="white col-6">
+      
+       <h3>Food and Drinks:</h3>
+      {{#each potluckItem.foodAndDrink}}
+       <li>
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> a946311438964660b04a5242f56dc382606d0a5c
+          <img src="{{this.pictureUrl}}" alt="ok" width="50px" id="checkbox"> 
+           {{this.name}}
+           {{/each}}
+        <script>
+            var checkbox = document.getElementById("checkbox")
+            console.log(checkbox)
+            
+          //  if (onclik.checkbox){
+            //    var checkbox.pictureUrl = req.user.pictureUrl
+           // }
+
+        </script>
+
+       </li>
+       <h5>Add Food or Drink</h5>
+       <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
+           <input type="text" name="name" placeholder="Bring ..." />
+           <br/>
+           <button>Add</button>
+       </form>
+   </div>
+
     <div class="right col">
         <h3>Guests: </h3>
         {{#each potluckItem.guests}}
