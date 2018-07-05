@@ -3,7 +3,6 @@ const multer = require("multer");
 const cloudinary = require("cloudinary");
 const nodemailer = require("nodemailer");
 const cloudinaryStorage = require("multer-storage-cloudinary");
-const nodemailer = require("nodemailer");
 
 const Potluck = require("../models/potluck-model.js");
 const User = require("../models/user-model.js");
