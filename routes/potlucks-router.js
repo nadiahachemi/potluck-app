@@ -17,17 +17,17 @@ const transport = nodemailer.createTransport({
   }
 });
 
-// cloudinary.config({
-//   cloud_name: "dx9ynexey",
-//   api_key: "687438279721981",
-//   api_secret: "dBpWFn_UjFY1YABfHZlZ0NxVDas"
-// });
-
 cloudinary.config({
-  cloud_name: process.env.cloudinary_name,
-  api_key: process.env.cloudinary_key,
-  api_secret: process.env.cloudinary_secret
+  cloud_name: "dx9ynexey",
+  api_key: "687438279721981",
+  api_secret: "dBpWFn_UjFY1YABfHZlZ0NxVDas"
 });
+
+// cloudinary.config({
+//   cloud_name: process.env.cloudinary_name,
+//   api_key: process.env.api_key,
+//   api_secret: process.env.api_secret
+// });
 const storage = cloudinaryStorage({
   cloudinary,
   folder: "room-pictures"
@@ -48,8 +48,7 @@ router.get("/potlucks/create", (req, res, next) => {
 });
 
 // "pictureUpload" is our file input's name attribute
-router.post(
-  "/process-potlucks",
+router.post("/process-potlucks",
   uploader.single("pictureUpload"),
   (req, res, next) => {
     if (!req.user) {
@@ -189,9 +188,9 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
     { $push: { foodAndDrink: { name } } },
     { runValidators: true }
   )
-    .then(potluckDoc => {
-      //test
-      res.locals.potluckArrayFoodAndDrink = potluckDoc;
+  .then(potluckDoc => {
+    res.locals.potluckArrayFoodAndDrink = potluckDoc;
+    console.log(potluckDoc)
       // fin du test
       res.redirect(`/potlucks/${potluckId}`);
     })
@@ -199,28 +198,56 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
       next(err);
     });
 });
+//route pour supprimer des food and drink
 
-// POST /food/:id/bring
-router.post(
-  "/potlucks/:potluckID/process-bringFoodAndDrnk",
-  (req, res, next) => {
-    const { potluckId } = req.params;
-    const { user } = req.user;
-
-    Potluck.findByIdAndUpdate(
-      potluckId,
-      { $set: { foodAndDrink: { name } } },
+router.post("/potlucks/:potluckID/process-removeFoodAndDrink", (req, res, next)=>{
+    const { potluckID } = req.params;
+    const { foodIde } = req.body;
+  
+    Potluck.findOneAndUpdate(
+      {_id: potluckID,  'foodAndDrink._id': foodIde },
+      { $pull: {foodAndDrink:{foodIde}}},
       { runValidators: true }
-    );
-  }
-);
+    )
+    .then(() => {
+      res.redirect(`/potlucks/${potluckID}`);
+    })
+    .catch((err)=>{
+    next(err)
+     });
+   
+});
+
+//CHECK BOX WITH PICTURE
+// POST /food/:id/bring
+router.post("/potlucks/:potluckID/process-bringFoodAndDrink",
+  (req, res, next) => {
+    const { potluckID } = req.params;
+    const { _id, pictureUrl } = req.user;
+    const { foodId } = req.body;
+  
+    Potluck.findOneAndUpdate(
+      {_id: potluckID, 'foodAndDrink._id': foodId },
+      { $set: { 'foodAndDrink.$.pictureUrl': pictureUrl } },
+      { runValidators: true }
+    )
+    .then(() => {
+      res.redirect(`/potlucks/${potluckID}`);
+    })
+    .catch((err)=>{
+    next(err)
+     });
+
+});
+
 
 //Ajouter un guest par email
 router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
   const { potluckId } = req.params;
   const { guests } = req.body;
 
-  User.findOne({ email: guests }).then(userResult => {
+  User.findOne({ email: guests })
+  .then(userResult => {
     if (userResult == null) {
       transport
         .sendMail({
@@ -231,7 +258,8 @@ router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
             "click the link bellow to sign in and be a part of this Potluck",
           html: `<h1> It's your lucky day! </h1>
           <h2> Your friend ${req.user.fullName} invited you to a potluck!</h2>
-          <p> Wanna see who's coming and what's on the menu? then just click the link below and sign up so you can be a part of the Potluck App family!</p>`
+          <p> Wanna see who's coming and what's on the menu? then just click the link below and sign up so you can be a part of the Potluck App family!</p>
+          <p>http://easypotluck.herokuapp.com/</p>`
         })
         .then(() => {
           res.redirect(`/potlucks/${potluckId}`);
