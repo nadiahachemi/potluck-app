@@ -32,19 +32,12 @@
        <h3>Food and Drinks:</h3>
       {{#each potluckItem.foodAndDrink}}
        <li>
-
+           <form method="POST" action="/potlucks/{{potluckItem._id}}/process-bringFoodAndDrink">
           <img src="{{this.pictureUrl}}" alt="ok" width="50px" id="checkbox"> 
            {{this.name}}
+           <input type="checkbox" name="user">
+           </form>
            {{/each}}
-        <script>
-            var checkbox = document.getElementById("checkbox")
-            console.log(checkbox)
-            
-          //  if (onclik.checkbox){
-            //    var checkbox.pictureUrl = req.user.pictureUrl
-           // }
-
-        </script>
 
        </li>
        <h5>Add Food or Drink</h5>

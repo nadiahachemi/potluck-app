@@ -16,8 +16,7 @@ const passportSetup = require("./passport/setup.js");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect(
-    "mongodb://localhost/potluck-app",
+  .connect(process.env.MONGODB_URI,
     { useMongoClient: true }
   )
   .then(() => {

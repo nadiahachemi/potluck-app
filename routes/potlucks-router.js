@@ -112,7 +112,9 @@ router.get("/potlucks", (req, res, next) => {
 //route pour acceder au detail du potluck
 router.get("/potlucks/:potluckId", (req, res, next) => {
   const { potluckId } = req.params;
+ 
 
+  
   if (!req.user) {
     //req.flash is defined by the "connect-flash" package
     req.flash("error", "you must be logged in");
@@ -120,11 +122,10 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
     res.redirect("/login");
     return;
   }
-
   Potluck.findById(potluckId)
-    .populate("guests")
+  .populate("guests")
     .populate("host")
-
+    
     .then(potluckDoc => {
       res.locals.potluckItem = potluckDoc;
       res.render("potluck-views/potlucks-details.hbs");
@@ -133,13 +134,13 @@ router.get("/potlucks/:potluckId", (req, res, next) => {
       //show our error page
       next(err);
     });
-});
-
-//potluck settings
-router.get("/potlucks/:potluckId/edit", (req, res, next) => {
-  const { potluckId } = req.params;
-
-  Potluck.findById(potluckId)
+  });
+  
+  //potluck settings
+  router.get("/potlucks/:potluckId/edit", (req, res, next) => {
+    const { potluckId } = req.params;
+    
+    Potluck.findById(potluckId)
     .then(potluckDoc => {
       res.locals.potluckItem = potluckDoc;
       res.render("potluck-views/potluck-edit.hbs");
@@ -147,61 +148,73 @@ router.get("/potlucks/:potluckId/edit", (req, res, next) => {
     .catch(err => {
       next(err);
     });
-});
-
-router.post("/process-edit/:potluckId", (req, res, next) => {
-  const { potluckId } = req.params;
-  const { name, location, date, pictureUrl } = req.body;
-
-  Potluck.findByIdAndUpdate(
-    potluckId,
-    { $set: { name, location, date, pictureUrl } },
-    { runValidators: true }
-  )
+  });
+  
+  router.post("/process-edit/:potluckId", (req, res, next) => {
+    const { potluckId } = req.params;
+    const { name, location, date, pictureUrl } = req.body;
+    
+    Potluck.findByIdAndUpdate(
+      potluckId,
+      { $set: { name, location, date, pictureUrl } },
+      { runValidators: true }
+    )
     .then(potluckDoc => {
       res.redirect(`/potlucks/${potluckId}`);
     })
     .catch(err => {
       next(err);
     });
-});
+  });
 
 // Route pour supprimer un potluck
 router.post("/potlucks/:potluckId/delete", (req, res, next) => {
   // Get the ID from the URL
   // const bookId = req.params.bookId
   const { potluckId } = req.params;
-
+  
   Potluck.findByIdAndRemove(potluckId)
-    .then(potluckDoc => {
-      res.redirect("/potlucks");
-    })
-    .catch(err => {
-      next(err);
-    });
+  .then(potluckDoc => {
+    res.redirect("/potlucks");
+  })
+  .catch(err => {
+    next(err);
+  });
 });
 
 // Route pour ajouter de la nourriture
 router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
   const { potluckId } = req.params;
   const { name } = req.body;
-
+  
   Potluck.findByIdAndUpdate(
     potluckId,
     { $push:{foodAndDrink: {name}}},
     { runValidators: true }
   )
-    .then(potluckDoc => {
-      //test
-      res.locals.potluckArrayFoodAndDrink = potluckDoc;
-      // fin du test
-      res.redirect(`/potlucks/${potluckId}`);
-    })
-    .catch(err => {
-      next(err);
-    });
+  .then(potluckDoc => {
+    //test
+    res.locals.potluckArrayFoodAndDrink = potluckDoc;
+    // fin du test
+    res.redirect(`/potlucks/${potluckId}`);
+  })
+  .catch(err => {
+    next(err);
+  });
 });
 
+// POST /food/:id/bring
+router.post("/potlucks/:potluckID/process-bringFoodAndDrnk", (req, res, next)=>{
+  const { potluckId } = req.params;
+  const {user}= req.user;
+
+  Potluck.findByIdAndUpdate(
+    potluckId,
+    { $set:{foodAndDrink: {name}}},
+    { runValidators: true }
+  )
+  
+ })
 
 //Ajouter un guest par email
 router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
