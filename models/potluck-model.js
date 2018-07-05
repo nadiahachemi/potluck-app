@@ -5,13 +5,10 @@ const Schema = mongoose.Schema;
 const potluckSchema = new Schema(
   {
     name: { type: String, required: true },
-    location:{
-      type: {type: String, required: true }, // default:"Point"
-      coordinates: [
-        {type:Number}
-      ]
+    location: {
+      type: { type: String, required: true }, // default:"Point"
+      coordinates: [{ type: Number }]
     },
-      //required: true },
     date: { type: Date, required: true },
     pictureUrl: {
       type: String,
@@ -35,7 +32,6 @@ const potluckSchema = new Schema(
   },
   { timestamps: true }
 );
-
 
 const Potluck = mongoose.model("Potluck", potluckSchema);
 

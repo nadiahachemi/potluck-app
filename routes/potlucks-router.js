@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
 const cloudinaryStorage = require("multer-storage-cloudinary");
+const nodemailer = require("nodemailer");
 
 const Potluck = require("../models/potluck-model.js");
 const User = require("../models/user-model.js");
@@ -21,9 +22,6 @@ cloudinary.config({
   api_key: "687438279721981",
   api_secret: "dBpWFn_UjFY1YABfHZlZ0NxVDas"
 });
-
-const storage = cloudinaryStorage({ cloudinary, folder: "room-pictures" });
-const uploader = multer({ storage });
 
 cloudinary.config({
   cloud_name: process.env.cloudinary_name,
@@ -207,38 +205,75 @@ router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
   const { potluckId } = req.params;
   const { guests } = req.body;
 
-  User.findOne({ email: guests })
-    .then(userResult => {
-      if (userResult == null) {
-        transport
-          .sendMail({
-            from: "Potluck App <trump@turd.com>", // gmail ignore this and just send from your account
-            to: guests,
-            subject: `${req.user.fullName}, invited you to a Potluck`,
-            text:
-              "click the link bellow to sign in and be a part of this Potluck",
-            html: `<h1> It's your lucky day! </h1>
-        <h2> Your friend ${req.user.fullName} invited you to a potluck!</h2>
-        <p> Wanna see who's comming and what's on the menu? then just click the link bellow and sign in so you can be a part of the Potluck App familly!</p>`
-          })
-
-          .then(() => {
-            res.redirect(`/potlucks/${potluckId}`);
-          });
-      } else {
-        Potluck.findByIdAndUpdate(
-          potluckId,
-          { $push: { guests: userResult._id } },
-          { runValidators: true }
-        ).then(() => {
+  User.findOne({ email: guests }).then(userResult => {
+    if (userResult == null) {
+      transport
+        .sendMail({
+          from: "Potluck App <trump@turd.com>", // gmail ignore this and just send from your account
+          to: guests,
+          subject: `${req.user.fullName}, invited you to a Potluck`,
+          text:
+            "click the link bellow to sign in and be a part of this Potluck",
+          html: `<h1> It's your lucky day! </h1>
+          <h2> Your friend ${req.user.fullName} invited you to a potluck!</h2>
+          <p> Wanna see who's coming and what's on the menu? then just click the link below and sign up so you can be a part of the Potluck App family!</p>`
+        })
+        .then(() => {
           res.redirect(`/potlucks/${potluckId}`);
         });
-      }
-    })
-
-    .catch(err => {
-      next(err);
-    });
+    } else {
+      Potluck.findById(req.params.potluckId)
+        .then(potluckResult => {
+          console.log(potluckResult);
+          console.log("I stopped there!");
+          var compteur = 0;
+          if (potluckResult.guests.length > 0) {
+            console.log("or there");
+            potluckResult.guests.forEach(guest => {
+              console.log(typeof guest);
+              console.log(typeof userResult._id);
+              if (guest.toString() == userResult._id.toString()) {
+                console.log("+1");
+                compteur += 1;
+              }
+            });
+            console.log("compteur = " + compteur);
+            if (compteur > 0) {
+              console.log("existe déjà!");
+              res.redirect(`/potlucks\${potluckId}`);
+            } else {
+              console.log("n'existe pas!");
+              Potluck.findByIdAndUpdate(
+                potluckId,
+                { $push: { guests: userResult._id } },
+                { runValidators: true }
+              )
+                .then(() => {
+                  res.redirect(`/potlucks/${potluckId}`);
+                })
+                .catch(err => {
+                  next(err);
+                });
+            }
+          } else {
+            Potluck.findByIdAndUpdate(
+              potluckId,
+              { $push: { guests: userResult._id } },
+              { runValidators: true }
+            )
+              .then(() => {
+                res.redirect(`/potlucks/${potluckId}`);
+              })
+              .catch(err => {
+                next(err);
+              });
+          }
+        })
+        .catch(err => {
+          next(err);
+        });
+    }
+  });
 });
 
 module.exports = router;

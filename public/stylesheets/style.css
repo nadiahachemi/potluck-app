@@ -19,7 +19,8 @@ nav {
 footer {
   height: 30px;
   width: 100%;
-  position: absolute;
+  position: relative;
+  clear: both;
   bottom: 0;
   align-self: center;
   background-color: black;

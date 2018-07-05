@@ -29,26 +29,14 @@
 
     <div class="white col-6">
         <h3>Food and Drinks:</h3>
-<<<<<<< HEAD
-        {{!--
-        <li> {{potluckItem.foodAndDrink}}</li> --}} {{!--
-        <label>
-            <input type="checkbox"> {{potluckItem.foodAndDrink}}
-        </label> --}}
-        <label>
-            <input type="checkbox"> {{potluckItem.foodAndDrink}}
-        </label>
-=======
         {{!-- {{#each potluckItem.foodAndDrink}}
         <li> {{this}}</li>
-        {{/each}} --}}
-        {{#each potluckItem.foodAndDrink}}
+        {{/each}} --}} {{#each potluckItem.foodAndDrink}}
         <li>
-        
-        <input type="checkbox" value="{{this}}">{{this}}</input>
-        {{/each}}
+
+            <input type="checkbox" value="{{this}}">{{this}}</input>
+            {{/each}}
         </li>
->>>>>>> a946311438964660b04a5242f56dc382606d0a5c
         <h5>Add Food or Drink</h5>
         <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
             <input type="text" name="foodAndDrink" placeholder="Bring ..." />
@@ -57,10 +45,7 @@
         </form>
     </div>
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> a946311438964660b04a5242f56dc382606d0a5c
+
     <div class="right col">
         <h3>Guests: </h3>
         {{#each potluckItem.guests}}
