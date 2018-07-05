@@ -1,6 +1,6 @@
 <h2>Sign Up</h2>
 
-<form method="POST" action="/process-signup">
+<form method="POST" action="/process-signup" enctype="multipart/form-data">
     <label for="">
         Full Name:
         <input type="text" name="fullName" placeholder="Name" />
@@ -14,9 +14,16 @@
     <br/>
 
     <label>
-        Password
+        Picture URL:
+        <input type="file" name="pictureUpload">
+    </label>
+    <br>
+
+    <label>
+        Password:
         <input type="password" name="originalPassword" placeholder="We won't tell 🙈" />
     </label>
     </br>
+
     <button>Sign Up</button>
 </form>

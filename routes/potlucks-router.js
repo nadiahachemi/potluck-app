@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
-const cloudinary = require("cloudinary");
 const nodemailer = require("nodemailer");
+const cloudinary = require("cloudinary");
 const cloudinaryStorage = require("multer-storage-cloudinary");
 
 const Potluck = require("../models/potluck-model.js");
@@ -28,9 +28,10 @@ cloudinary.config({
   api_key: process.env.cloudinary_key,
   api_secret: process.env.cloudinary_secret
 });
+
 const storage = cloudinaryStorage({
   cloudinary,
-  folder: "room-pictures"
+  folder: "potluck-pictures"
 });
 const uploader = multer({ storage });
 
@@ -147,22 +148,27 @@ router.get("/potlucks/:potluckId/edit", (req, res, next) => {
     });
 });
 
-router.post("/process-edit/:potluckId", (req, res, next) => {
-  const { potluckId } = req.params;
-  const { name, location, date, pictureUrl } = req.body;
+router.post(
+  "/process-edit/:potluckId",
+  uploader.single("pictureUpload"),
+  (req, res, next) => {
+    const { potluckId } = req.params;
+    const { name, location, date, pictureUrl } = req.body;
+    let { secure_url } = req.file;
 
-  Potluck.findByIdAndUpdate(
-    potluckId,
-    { $set: { name, location, date, pictureUrl } },
-    { runValidators: true }
-  )
-    .then(potluckDoc => {
-      res.redirect(`/potlucks/${potluckId}`);
-    })
-    .catch(err => {
-      next(err);
-    });
-});
+    Potluck.findByIdAndUpdate(
+      potluckId,
+      { $set: { name, location, date, pictureUrl: secure_url } },
+      { runValidators: true }
+    )
+      .then(potluckDoc => {
+        res.redirect(`/potlucks/${potluckId}`);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+);
 
 // Route pour supprimer un potluck
 router.post("/potlucks/:potluckId/delete", (req, res, next) => {
@@ -255,7 +261,7 @@ router.post("/potlucks/:potluckId/process-guests", (req, res, next) => {
             console.log("compteur = " + compteur);
             if (compteur > 0) {
               console.log("existe déjà!");
-              res.redirect(`/potlucks\${potluckId}`);
+              res.redirect(`/potlucks/${potluckId}`);
             } else {
               console.log("n'existe pas!");
               Potluck.findByIdAndUpdate(

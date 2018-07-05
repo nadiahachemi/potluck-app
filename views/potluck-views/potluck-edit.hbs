@@ -1,7 +1,7 @@
 <h2>Edit {{potluckItem.name}}</h2>
 
 <div class="edit">
-    <form method="POST" action="/process-edit/{{potluckItem._id}}">
+    <form method="POST" action="/process-edit/{{potluckItem._id}}" enctype="multipart/form-data">
         <label>
             Name:
             <input type="text" name="name" placeholder="My super birthday party!" value="{{potluckItem.name}}">
@@ -25,7 +25,7 @@
 
         <label>
             Picture URL:
-            <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg" value="{{potluckItem.pictureUrl}}">
+            <input type="file" name="pictureUpload">
         </label>
         <br>
 

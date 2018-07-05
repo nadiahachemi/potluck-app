@@ -2,6 +2,9 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const nodemailer = require("nodemailer");
+const multer = require("multer");
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
 
 const User = require("../models/user-model");
 
@@ -14,40 +17,63 @@ const transport = nodemailer.createTransport({
   }
 });
 
+cloudinary.config({
+  cloud_name: process.env.cloudinary_name,
+  api_key: process.env.cloudinary_key,
+  api_secret: process.env.cloudinary_secret
+});
+
+const storage = cloudinaryStorage({
+  cloudinary,
+  folder: "user-pictures"
+});
+const uploader = multer({ storage });
+
 router.get("/signup", (req, res, next) => {
   res.render("auth-views/signup-form.hbs");
 });
 
-router.post("/process-signup", (req, res, next) => {
-  const { fullName, email, originalPassword } = req.body;
+router.post(
+  "/process-signup",
+  uploader.single("pictureUpload"),
+  (req, res, next) => {
+    const { fullName, email, pictureUrl, originalPassword } = req.body;
+    let { secure_url } = req.file;
 
-  //password can't be blank
-  if (originalPassword === "" || originalPassword.match(/[0-9]/) === null) {
-    flash.req("error", "password can't be blank etc..");
-    res.redirect("/signup");
-    return;
-  }
+    //password can't be blank
+    if (originalPassword === "" || originalPassword.match(/[0-9]/) === null) {
+      // flash.req("error", "password can't be blank etc..");
+      res.redirect("/signup");
+      return;
+    }
 
-  const encryptedPassword = bcrypt.hashSync(originalPassword, 10);
-  User.create({ fullName, email, encryptedPassword })
-    .then(userDoc => {
-      transport.sendMail({
-          from: "Potluck Users <potuse@example.com>",
-          to: `${fullName} <${email}>`,
-          subject: "Thank you for joining Potluck App!",
-          text: `Welcome, ${fullName}! Thank you for joining Potluck App :)`,
-          html: `<h1>Welcome, ${fullName}!</h1>
-              <p>Thank you for joining Potluck App!</p>`
-        })
-        .then(() => {
-          req.flash("success", "signed up successfully! Try to log in baby!");
-          res.redirect("/");
-        });
+    const encryptedPassword = bcrypt.hashSync(originalPassword, 10);
+    User.create({
+      fullName,
+      email,
+      pictureUrl: secure_url,
+      encryptedPassword
     })
-    .catch(err => {
-      next(err);
-    });
-});
+      .then(userDoc => {
+        transport
+          .sendMail({
+            from: "Potluck Users <potuse@example.com>",
+            to: `${fullName} <${email}>`,
+            subject: "Thank you for joining Potluck App!",
+            text: `Welcome, ${fullName}! Thank you for joining Potluck App :)`,
+            html: `<h1>Welcome, ${fullName}!</h1>
+              <p>Thank you for joining Potluck App!</p>`
+          })
+          .then(() => {
+            // req.flash("success", "signed up successfully! Try to log in baby!");
+            res.redirect("/");
+          });
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+);
 
 router.get("/login", (req, res, next) => {
   res.render("auth-views/login-form.hbs");
@@ -67,7 +93,7 @@ router.post("/process-login", (req, res, next) => {
       //we are ready to check the password if we get here(email was okay)
       const { encryptedPassword } = userDoc;
       if (!bcrypt.compareSync(loginPassword, encryptedPassword)) {
-        req.flash("error ", "incorect password");
+        // req.flash("error ", "incorect password");
         res.redirect("/login");
         return;
       }
@@ -76,7 +102,7 @@ router.post("/process-login", (req, res, next) => {
       // res.logIn is a passport method for logging in a user
       //behind the scenes it calls our passport.serialized() function
       req.logIn(userDoc, () => {
-        req.flash("success", "you're logged in");
+        // req.flash("success", "you're logged in");
         res.redirect("/potlucks");
       });
       // req.session.userId = userDoc._id;
@@ -88,7 +114,7 @@ router.post("/process-login", (req, res, next) => {
 
 router.get("/logout", (req, res, next) => {
   req.logout();
-  req.flash("succes", "logged out succesfully");
+  // req.flash("succes", "logged out succesfully");
   res.redirect("/");
 });
 

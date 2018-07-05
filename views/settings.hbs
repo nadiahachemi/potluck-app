@@ -1,13 +1,19 @@
 <h2>User Settings</h2>
 
-<form method="post" action="/process-settings">
+<form method="post" action="/process-settings" enctype="multipart/form-data">
     <label>
         Full name:
         <input type="text" name="fullName" value="{{blahUser.fullName}}" placeholder="Lando Calrissian">
     </label>
     <br>
 
-    <h3>Change Your Password</h3>
+    <label>
+        Picture URL:
+        <input type="file" name="pictureUpload" />
+    </label>
+    <br>
+
+    <h2>Change Your Password</h2>
     <label>
         Old password:
         <input type="password" name="oldPassword" placeholder="******">

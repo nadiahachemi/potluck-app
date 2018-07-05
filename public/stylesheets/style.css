@@ -12,6 +12,12 @@ body {
   color: white;
   height: 750px; }
 
+.home-page > p {
+  font-size: 50px; }
+
+.home-page a {
+  color: white; }
+
 nav {
   background-color: black;
   width: 100%; }
@@ -24,7 +30,8 @@ footer {
   bottom: 0;
   align-self: center;
   background-color: black;
-  color: white; }
+  color: white;
+  margin-top: 20px; }
 
 h2 {
   text-align: center;
@@ -44,6 +51,10 @@ p {
   align-self: center;
   align-items: center;
   align-content: center; }
+
+.list {
+  padding-left: 50px;
+  padding-right: 50px; }
 
 #checkbox {
   border-color: blue;
