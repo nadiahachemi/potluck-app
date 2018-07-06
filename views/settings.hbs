@@ -1,30 +1,28 @@
 <h2>User Settings</h2>
 
-<form method="post" action="/process-settings" enctype="multipart/form-data">
-    <label>
-        Full name:
-        <input type="text" name="fullName" value="{{blahUser.fullName}}" placeholder="Lando Calrissian">
-    </label>
-    <br>
+<form method="POST" action="/process-settings" enctype="multipart/form-data">
 
-    <label>
-        Picture URL:
-        <input type="file" name="pictureUpload" />
-    </label>
-    <br>
+    <div class="form-group">
+        <label>Full Name:</label>
+        <input name="fullName" type="text" class="form-control" value="{{blahUser.fullName}}" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Change Your Picture</label>
+        <input type="file" name="pictureUpload" class="form-control-file">
+    </div>
 
     <h2>Change Your Password</h2>
-    <label>
-        Old password:
-        <input type="password" name="oldPassword" placeholder="******">
-    </label>
-    <br>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Old Password</label>
+        <input name="oldPassword" type="password" class="form-control" placeholder="We won't tell 🙈">
+    </div>
 
-    <label>
-        New password:
-        <input type="password" name="newPassword" placeholder="******">
-    </label>
-    <br>
+    <div class="form-group">
+        <label for="exampleInputPassword1">New Password</label>
+        <input name="newPassword" type="password" class="form-control" placeholder="We won't tell 🙈">
+    </div>
 
-    <button>Save Settings</button>
+    <button type="submit" class="btn btn-primary">Save Settings</button>
+
 </form>
