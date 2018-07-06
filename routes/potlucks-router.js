@@ -199,6 +199,8 @@ router.post("/potlucks/:potluckId/process-foodAndDrink", (req, res, next) => {
       next(err);
     });
 });
+
+
 //route pour supprimer des food and drink
 
 router.post(
@@ -206,10 +208,11 @@ router.post(
   (req, res, next) => {
     const { potluckID } = req.params;
     const { foodIde } = req.body;
+    console.log(foodIde);
 
     Potluck.findOneAndUpdate(
-      { _id: potluckID, "foodAndDrink._id": foodIde },
-      { $pull: { foodAndDrink: { foodIde } } },
+      { _id: potluckID},
+      { $pull:{foodAndDrink:{_id: foodIde}}},
       { runValidators: true }
     )
       .then(() => {
