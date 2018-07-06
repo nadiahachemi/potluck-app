@@ -9,7 +9,8 @@ form {
   margin: 0 auto;
   flex: 0 0 40%;
   align-self: center;
-  justify-self: center; }
+  justify-self: center;
+  width: 40%; }
 
 .home-page {
   background-image: url("../images/fond2-homepage.jpg");
@@ -27,6 +28,10 @@ form {
 nav {
   background-color: black;
   width: 100%; }
+
+.avatar {
+  width: 30px;
+  height: 30px; }
 
 footer {
   height: 30px;
