@@ -2,7 +2,7 @@ console.log(google.maps);
 
 const mapDiv = document.querySelector(".my-google-map");
 const locInput = document.querySelector(".location-input");
-//const latInput =document.(".lat-input");
+const latInput = document.querySelector(".lat-input");
 const longInput = document.querySelector(".long-input");
 
 console.log(locInput);
@@ -17,7 +17,7 @@ if (locInput) {
 }
 
 function startPlaceAutocomplete() {
-  const autocomplete = new google.maps.places.Autocomplete(locInput);
+  const autocomplete = new google.maps.places.Autocomplete(locationInput);
 
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
@@ -119,26 +119,26 @@ function startMap(potluckItem) {
     ]
   });
 
-  // new google.maps.Marker({
-  //   map,
-  //   position:{
-  //     lat:potluckItem.location.coordinates[0] ,
-  //     lng:potluckItem.location.coordinates[1]
-  //   },
-  //   tittle:"it's happening here",
-  //   animation:google.maps.Animation.DROP
-  // })
+  new google.maps.Marker({
+    map,
+    position: {
+      lat: potluckItem.location.coordinates[0],
+      lng: potluckItem.location.coordinates[1]
+    },
+    tittle: "it's happening here",
+    animation: google.maps.Animation.DROP
+  });
 }
 
-new google.maps.Marker({
-  map,
-  position: {
-    lat: 18.3894,
-    lng: -66.1305
-  },
-  tittle: "San Juan, Puerto Rico",
-  animation: google.maps.Animation.DROP
-});
+// new google.maps.Marker({
+//   map,
+//   position: {
+//     lat: 18.3894,
+//     lng: -66.1305
+//   },
+//   tittle: "San Juan, Puerto Rico",
+//   animation: google.maps.Animation.DROP
+// });
 
 // new google.maps.Marker({
 //   map,

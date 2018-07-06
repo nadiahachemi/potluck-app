@@ -7,12 +7,34 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+[class$="-message"] {
+  border: 3px solid;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.success-message {
+  color: chartreuse;
+}
+
+.error-message {
+  color: crimson;
+}
+
 form {
   margin: 0 auto;
   flex: 0 0 40%;
   align-self: center;
   justify-self: center;
   width: 40%;
+}
+
+.dashboard form {
+  margin: 0 auto;
+  flex: 0 0 40%;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
 }
 
 .home-page {
@@ -44,7 +66,7 @@ nav {
 footer {
   height: 30px;
   width: 100%;
-  position: relative;
+  position: fixed;
   clear: both;
   bottom: 0;
   align-self: center;
@@ -64,7 +86,7 @@ p {
 
 .my-google-map {
   height: 200px;
-  width: 200px;
+  width: 300px;
 }
 
 .edit {
@@ -84,6 +106,15 @@ p {
 #checkbox {
   border-color: blue;
   margin: 10px;
+}
+
+.dashboard {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+ul {
+  list-style-type: none;
 }
 // Countdown
 

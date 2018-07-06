@@ -93,7 +93,7 @@ router.post("/process-login", (req, res, next) => {
       //we are ready to check the password if we get here(email was okay)
       const { encryptedPassword } = userDoc;
       if (!bcrypt.compareSync(loginPassword, encryptedPassword)) {
-        // req.flash("error ", "incorect password");
+        req.flash("error ", "incorect password");
         res.redirect("/login");
         return;
       }
@@ -102,7 +102,7 @@ router.post("/process-login", (req, res, next) => {
       // res.logIn is a passport method for logging in a user
       //behind the scenes it calls our passport.serialized() function
       req.logIn(userDoc, () => {
-        // req.flash("success", "you're logged in");
+        req.flash("success", "you're logged in");
         res.redirect("/potlucks");
       });
       // req.session.userId = userDoc._id;
@@ -114,7 +114,7 @@ router.post("/process-login", (req, res, next) => {
 
 router.get("/logout", (req, res, next) => {
   req.logout();
-  // req.flash("succes", "logged out succesfully");
+  req.flash("success", "logged out succesfully");
   res.redirect("/");
 });
 

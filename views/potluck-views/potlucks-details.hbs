@@ -3,69 +3,78 @@
 </h2>
 <hr>
 
-<div class="row">
-    <div class="col">
-        <h3>Hosted by:</h3>
-        <p>{{potluckItem.host.fullName}}</p>
-        <h3>When ?</h3>
-        <p>{{potluckItem.date}}</p>
-        <h3>Where ?</h3>
-        <p>
-            <div class="my-google-map"></div>
-            <img src="/images/location.png" height="25px"> {{potluckItem.location}}
-        </p>
-        {{!--
-        <div id="countdown">
-            <div id='tiles'></div>
-            <div class="labels">
-                <li>Days</li>
-                <li>Hours</li>
-                <li>Mins</li>
-                <li>Secs</li>
-            </div>
-        </div> --}}
-    </div>
+<div class="dashboard">
+    <div class="row">
+        <div class="col">
+            <h3>
+                <i>Hosted by:</i>
+            </h3>
+            <p>{{potluckItem.host.fullName}}</p>
+            <h3>When ?</h3>
+            <p>{{potluckItem.date}}</p>
+            <h3>Where ?</h3>
+            <p>
+                <div class="my-google-map"></div>
+                <img src="/images/location.png" height="25px"> {{potluckItem.location}}
+            </p>
+            {{!--
+            <div id="countdown">
+                <div id='tiles'></div>
+                <div class="labels">
+                    <li>Days</li>
+                    <li>Hours</li>
+                    <li>Mins</li>
+                    <li>Secs</li>
+                </div>
+            </div> --}}
+        </div>
 
 
-    <div class="white col-6">
+        <div class="white col-6">
 
-        <h3>Food and Drinks:</h3>
-        <ul>
-            {{#each potluckItem.foodAndDrink}}
-            <li>
-                <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-bringFoodAndDrink">
-                    <input type="hidden" name="foodId" value="{{this._id}}" />
-                    <button type="submit">
-                        <img src="{{this.pictureUrl}}" alt="ok" width="50px" name="pictureUrl">
-                    </button>
-                    {{this.name}}
-                </form>
+            <h3>Food and Drinks:</h3>
+            <ul>
+                {{#each potluckItem.foodAndDrink}}
+                <li>
+                    <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-bringFoodAndDrink">
+                        <input type="hidden" name="foodId" value="{{this._id}}" />
+                        <button type="submit">
+                            <img src="{{this.pictureUrl}}" alt="ok" width="50px" name="pictureUrl">
+                        </button>
+                        {{this.name}}
+                    </form>
 
-                <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-removeFoodAndDrink">
-                    <input type="hidden" name="foodIde" value="{{this._id}}" />
-                    <button type="submit">Nah, we're not having that !</button>
-                </form>
-            </li>
+                    <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-removeFoodAndDrink">
+                        <input type="hidden" name="foodIde" value="{{this._id}}" />
+                        <button type="submit">Nah, we're not having that !</button>
+                    </form>
+                </li>
+                {{/each}}
+            </ul>
+            <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
+                <div class="form-group">
+                    <label>Add Food or Drink</label>
+                    <input name="name" type="text" class="form-control" placeholder="Bring ...">
+                </div>
+                <button>Add</button>
+            </form>
+        </div>
+
+        <div class="right col">
+            <h3>Guests: </h3>
+            {{#each potluckItem.guests}}
+            <p>{{this.fullName}}</p>
             {{/each}}
-        </ul>
-        <h5>Add Food or Drink</h5>
-        <form method="POST" action="/potlucks/{{potluckItem._id}}/process-foodAndDrink">
-            <input type="text" name="name" placeholder="Bring ..." />
-            <br/>
-            <button>Add</button>
-        </form>
-    </div>
 
-    <div class="right col">
-        <h3>Guests: </h3>
-        {{#each potluckItem.guests}}
-        <h3>{{this.fullName}}</h3>
-        {{/each}}
-        <h5>Add Guests</h5>
-        <form method="POST" action="/potlucks/{{potluckItem._id}}/process-guests">
-            <input type="search" name="guests" placeholder="Invite ..." />
-            <br/>
-            <button>Add</button>
-        </form>
+            <form method="POST" action="/potlucks/{{potluckItem._id}}/process-guests">
+                <div class="form-group">
+                    <label>Add Guests</label>
+                    <input name="guests" type="search" class="form-control" placeholder="guest@mail.com">
+                    <small id="emailHelp" class="form-text text-muted">If your guest isn't signed up in our app, we will send him/her an email :)</small>
+                </div>
+                <button>Add</button>
+            </form>
+
+        </div>
     </div>
 </div>
