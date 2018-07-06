@@ -7,6 +7,13 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+form {
+  margin: 0 auto;
+  flex: 0 0 40%;
+  align-self: center;
+  justify-self: center;
+}
+
 .home-page {
   background-image: url("../images/fond2-homepage.jpg");
   background-position: center;

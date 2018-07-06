@@ -1,29 +1,28 @@
 <h2>Sign Up</h2>
 
 <form method="POST" action="/process-signup" enctype="multipart/form-data">
-    <label for="">
-        Full Name:
-        <input type="text" name="fullName" placeholder="Name" />
-    </label>
-    <br/>
 
-    <label>
-        Email:
-        <input type="text" name="email" placeholder="email" />
-    </label>
-    <br/>
+    <div class="form-group">
+        <label>Full Name:</label>
+        <input name="fullName" type="text" class="form-control" placeholder="Name">
+    </div>
 
-    <label>
-        Picture URL:
-        <input type="file" name="pictureUpload">
-    </label>
-    <br>
+    <div class="form-group">
+        <label>Email address</label>
+        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
 
-    <label>
-        Password:
-        <input type="password" name="originalPassword" placeholder="We won't tell 🙈" />
-    </label>
-    </br>
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Add A Picture of Yourself</label>
+        <input type="file" name="pictureUpload" class="form-control-file" id="exampleFormControlFile1">
+    </div>
 
-    <button>Sign Up</button>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="originalPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="We won't tell 🙈">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+
 </form>

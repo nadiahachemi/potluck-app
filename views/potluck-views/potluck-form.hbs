@@ -1,32 +1,30 @@
 <h2>Create a Potluck</h2>
 
 <form method="POST" action="/process-potlucks" enctype="multipart/form-data">
-<label>
-        Name:
-        <input type="text" name="name" placeholder="My super birthday party!">
-    </label>
-    <br>
 
-    <label>
-        Location:
-        <input type="text" class="location-input" name="location" placeholder="666, Unicorn Street">
-    </label>
-    <br>
+    <div class="form-group">
+        <label>Potluck Name:</label>
+        <input name="name" type="text" class="form-control" placeholder="My super birthday party!">
+    </div>
+
+    <div class="form-group">
+        <label>Location:</label>
+        <input name="location" type="text" class="form-control location-input" placeholder="666, Unicorn Street">
+    </div>
 
     <input type="hidden" name="latitude" class="lat-input" />
     <input type="hidden" name="longitude" class="long-input" />
 
-    <label>
-        Date:
-        <input type="date" name="date">
-    </label>
-    <br>
+    <div class="form-group">
+        <label>Date</label>
+        <input name="date" type="date" class="form-control">
+    </div>
 
-    <label>
-        Picture URL:
-        <input type="file" name="pictureUpload"/>
-    </label>
-    <br>
+    <div class="form-group">
+        <label>Add A Picture</label>
+        <input type="file" name="pictureUpload" class="form-control-file">
+    </div>
 
-    <button>Save This Potluck</button>
+    <button type="submit" class="btn btn-primary">Create Potluck</button>
+
 </form>

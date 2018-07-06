@@ -1,39 +1,34 @@
 <h2>Edit {{potluckItem.name}}</h2>
 
-<div class="edit">
-    <form method="POST" action="/process-edit/{{potluckItem._id}}" enctype="multipart/form-data">
-        <label>
-            Name:
-            <input type="text" name="name" placeholder="My super birthday party!" value="{{potluckItem.name}}">
-        </label>
-        <br>
+<form method="POST" action="/process-edit/{{potluckItem._id}}" enctype="multipart/form-data">
 
-        <label>
-            Location:
-            <input type="text" class="location-input" name="location" value="{{potluckItem.location}}">
-        </label>
-        <br>
+    <div class="form-group">
+        <label>Potluck Name:</label>
+        <input name="name" type="text" class="form-control" value="{{potluckItem.name}}" placeholder="My super birthday party!">
+    </div>
 
-        <input type="hidden" name="latitude" class="lat-input" />
-        <input type="hidden" name="longitude" class="long-input" />
+    <div class="form-group">
+        <label>Location:</label>
+        <input name="location" type="text" class="form-control location-input" value="{{potluckItem.location}}">
+    </div>
 
-        <label>
-            Date:
-            <input type="date" name="date" value="{{potluckItem.date}}">
-        </label>
-        <br>
+    <input type="hidden" name="latitude" class="lat-input" />
+    <input type="hidden" name="longitude" class="long-input" />
 
-        <label>
-            Picture URL:
-            <input type="file" name="pictureUpload">
-        </label>
-        <br>
+    <div class="form-group">
+        <label>Date</label>
+        <input name="date" type="date" class="form-control" value="{{potluckItem.date}}">
+    </div>
 
-        <button>Save Changes</button>
-    </form>
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Change The Picture</label>
+        <input type="file" name="pictureUpload" class="form-control-file">
+    </div>
 
-    <form action="/potlucks/{{potluckItem._id}}/delete" method="POST">
-        <button>Delete this potluck</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 
-</div>
+</form>
+
+<form action="/potlucks/{{potluckItem._id}}/delete" method="POST">
+    <button class="btn btn-primary">Delete this potluck</button>
+</form>
