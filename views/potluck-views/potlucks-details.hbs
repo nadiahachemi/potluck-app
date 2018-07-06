@@ -10,9 +10,13 @@
                 <i>Hosted by:</i>
             </h3>
             <p>{{potluckItem.host.fullName}}</p>
-            <h3>When ?</h3>
+            <h3>
+                <i>When ?</i>
+            </h3>
             <p>{{potluckItem.date}}</p>
-            <h3>Where ?</h3>
+            <h3>
+                <i>Where ?</i>
+            </h3>
             <p>
                 <div class="my-google-map"></div>
                 <img src="/images/location.png" height="25px"> {{potluckItem.location}}
@@ -29,10 +33,10 @@
             </div> --}}
         </div>
 
-
+        <div class="remplissage"></div>
         <div class="white col-6">
-
             <h3>Food and Drinks:</h3>
+            <p>Click on the box before the item you are planning to bring</p>
             <ul>
                 {{#each potluckItem.foodAndDrink}}
                 <li>
@@ -46,7 +50,9 @@
 
                     <form method="POST" action="/potlucks/{{../potluckItem._id}}/process-removeFoodAndDrink">
                         <input type="hidden" name="foodIde" value="{{this._id}}" />
-                        <button type="submit">Nah, we're not having that !</button>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Not this!
+                        </button>
                     </form>
                 </li>
                 {{/each}}
@@ -56,10 +62,12 @@
                     <label>Add Food or Drink</label>
                     <input name="name" type="text" class="form-control" placeholder="Bring ...">
                 </div>
-                <button>Add</button>
+                <button class="btn btn-primary btn-sm">
+                    Add
+                </button>
             </form>
         </div>
-
+        <div class="remplissage"></div>
         <div class="right col">
             <h3>Guests: </h3>
             {{#each potluckItem.guests}}
@@ -72,7 +80,9 @@
                     <input name="guests" type="search" class="form-control" placeholder="guest@mail.com">
                     <small id="emailHelp" class="form-text text-muted">If your guest isn't signed up in our app, we will send him/her an email :)</small>
                 </div>
-                <button>Add</button>
+                <button class="btn btn-primary btn-sm">
+                    Add
+                </button>
             </form>
 
         </div>
